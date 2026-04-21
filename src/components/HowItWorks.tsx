@@ -86,7 +86,7 @@ const HowItWorks = () => {
     <section
       ref={sectionRef}
       id="como-funciona"
-      className="bg-gradient-to-br from-gray-50 to-gray-100 py-12 md:py-16"
+      className="relative bg-gradient-to-br from-radial-dark via-[#2a1f3a] to-[#1a0f2a] py-12 md:py-16 overflow-hidden"
     >
       <div className="container mx-auto px-4">
         {/* Header da seção */}
@@ -102,11 +102,11 @@ const HowItWorks = () => {
               height={160}
             />
           </div>
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-800">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">
             Como funciona a energia solar na sua{" "}
             <span className="text-radial-orange">casa</span> em 4 passos
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <p className="text-lg text-gray-300 max-w-2xl mx-auto">
             <span className="md:hidden">Um processo simples do primeiro contato até você começar a economizar na conta de luz</span>
             <span className="hidden md:inline">Um processo simples do primeiro contato<br />até você começar a economizar na conta de luz</span>
           </p>
@@ -184,7 +184,7 @@ const HowItWorks = () => {
               }}
             ></div>
           </Link>
-          <p className="text-gray-600 mt-4 text-lg">
+          <p className="text-gray-300 mt-4 text-lg">
             ⚡ Processo simples • Equipe especializada • Resultado garantido
           </p>
         </div>

@@ -95,7 +95,7 @@ const ContactForm = () => {
   // Mensagem de sucesso
   if (isSuccess) {
     return (
-      <section id="contato" className="bg-radial-dark py-12">
+      <section id="contato" className="bg-gradient-to-br from-gray-50 to-gray-100 py-12">
         <div className="container mx-auto px-4 max-w-2xl">
           <div className="relative p-0.5">
             <div className="absolute top-0.5 left-0.5 w-full h-full bg-radial-dark rounded-2xl"></div>
@@ -150,7 +150,7 @@ const ContactForm = () => {
   }
 
   return (
-    <section id="contato" className="bg-radial-dark py-12">
+    <section id="contato" className="bg-gradient-to-br from-gray-50 to-gray-100 py-12">
       <div className="container mx-auto px-4 max-w-2xl">
         <div className="relative p-0.5">
           {/* Sombra/borda inferior e direita */}

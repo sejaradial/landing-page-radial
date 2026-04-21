@@ -192,10 +192,7 @@ const Resultados = () => {
     <section
       ref={sectionRef}
       id="resultados"
-      className="py-12 md:py-16 relative"
-      style={{
-        background: "linear-gradient(to bottom, #ffffff 0%, #ffffff 85%, #ff5001 85%, #ff5001 100%)",
-      }}
+      className="py-12 md:py-16 relative bg-white"
     >
       <div className="container mx-auto px-4">
         {/* Header da seção */}
@@ -526,27 +523,32 @@ const Resultados = () => {
             </div>
           </div>
         )}
-        
-      </div>
-      
-      {/* CTA Button - Positioned absolutely in orange area */}
-      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
-        <Link
-          to="/inscricao"
-          onClick={() => {
-            trackButtonClick("quero_economizar_tambem", "resultados_section");
-          }}
-          className="inline-block bg-white text-gray-800 font-semibold px-8 py-3 rounded-full transition-colors shadow-lg hover:shadow-xl hover:scale-105 transform whitespace-nowrap hover:bg-gray-50 relative overflow-hidden"
-        >
-          <span className="relative z-10">Quero economizar também!</span>
-          <div
-            className="absolute inset-0 opacity-20 animate-shimmer"
-            style={{
-              background: "linear-gradient(45deg, transparent 30%, rgba(255, 147, 38, 0.4) 50%, transparent 70%)",
-              transform: "translateX(-100%)"
+
+        {/* CTA centralizado */}
+        <div className="flex justify-center mt-10">
+          <Link
+            to="/inscricao"
+            onClick={() => {
+              trackButtonClick("quero_economizar_tambem", "resultados_section");
             }}
-          ></div>
-        </Link>
+            className="group inline-flex items-center gap-2 bg-radial-orange hover:bg-orange-600 text-white font-bold py-4 px-8 md:px-12 rounded-full text-base md:text-lg transition-all shadow-2xl shadow-radial-orange/40 transform hover:scale-105"
+          >
+            <span>Quero economizar também!</span>
+            <svg
+              className="w-5 h-5 transition-transform group-hover:translate-x-1"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2.5}
+                d="M17 8l4 4m0 0l-4 4m4-4H3"
+              />
+            </svg>
+          </Link>
+        </div>
       </div>
     </section>
   );

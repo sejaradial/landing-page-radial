@@ -31,9 +31,9 @@ const HomePage = () => {
       <main className="flex-grow">
         <Hero />
         <Investimento />
+        <Diferenciais />
         <Resultados />
         <HowItWorks />
-        <Diferenciais />
         <ContactForm />
       </main>
       <Footer />
