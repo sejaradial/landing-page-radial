@@ -36,7 +36,7 @@ const Hero = () => {
   return (
     <section
       ref={heroRef}
-      className="relative bg-gradient-to-br from-radial-dark via-[#1a0f2a] to-[#2a1f3a] py-12 md:py-16 lg:py-20 overflow-hidden flex items-center"
+      className="relative bg-gradient-to-br from-radial-dark via-[#1a0f2a] to-[#2a1f3a] py-6 md:py-12 lg:py-10 xl:py-12 overflow-hidden min-h-screen flex items-center"
     >
       {/* Glows de fundo */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -87,19 +87,6 @@ const Hero = () => {
               ></div>
             </Link>
 
-            <div className="mt-6 lg:mt-8">
-              <p className="text-white/80 text-sm md:text-base font-medium">
-                <span className="md:hidden">
-                  ✅ Estudo de viabilidade completo • ✅ Simulação de economia •
-                  ✅ Projeto personalizado
-                </span>
-                <span className="hidden md:inline">
-                  ✅ Estudo de viabilidade completo • ✅ Simulação de economia
-                  <br />
-                  ✅ Projeto personalizado
-                </span>
-              </p>
-            </div>
           </div>
 
           {/* Coluna do vídeo */}

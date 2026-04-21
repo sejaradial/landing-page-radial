@@ -1,38 +1,72 @@
 import { useGTM } from "@/hooks/useGTM";
 import { usePageTracking } from "@/hooks/usePageTracking";
-import React, { useMemo, useState } from "react";
+import React, { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link, useSearchParams } from "react-router-dom";
 
 type Pitch = "roi" | "financiamento";
 
-const PITCH_COPY: Record<Pitch, { h1: string; sub: string; cta: string }> = {
-  roi: {
-    h1: "Calcule seu Retorno: Estudo de ROI e Payback da sua Energia Solar",
-    sub: "Ótimo! Para calcularmos o seu retorno exato e o Payback em meses, precisamos dos dados abaixo. Sua economia começa aqui.",
-    cta: "Quero Meu Estudo de Retorno Gratuito!",
-  },
-  financiamento: {
-    h1: "Acesso ao Crédito: Simulação de Financiamento Sem Descapitalização",
-    sub: "Entendido! Preencha os dados abaixo e vamos buscar as melhores Linhas de Crédito e Financiamento para que seu projeto comece a se pagar com a própria economia.",
-    cta: "Quero Simular Meu Financiamento!",
-  },
+type PropertyType = "casa" | "apartamento" | "empresa";
+type PriorKnowledge = "sim" | "nao";
+type BillRange =
+  | "100-299"
+  | "300-499"
+  | "500-799"
+  | "800-1499"
+  | "1500-3000"
+  | "acima-3000";
+
+const PROPERTY_OPTIONS: { value: PropertyType; label: string }[] = [
+  { value: "casa", label: "Casa" },
+  { value: "apartamento", label: "Apartamento" },
+  { value: "empresa", label: "Empresa" },
+];
+
+const KNOWLEDGE_OPTIONS: { value: PriorKnowledge; label: string }[] = [
+  { value: "sim", label: "Sim" },
+  { value: "nao", label: "Não" },
+];
+
+const BILL_RANGES: { value: BillRange; label: string }[] = [
+  { value: "100-299", label: "R$100 – R$299" },
+  { value: "300-499", label: "R$300 – R$499" },
+  { value: "500-799", label: "R$500 – R$799" },
+  { value: "800-1499", label: "R$800 – R$1.499" },
+  { value: "1500-3000", label: "R$1.500 – R$3.000" },
+  { value: "acima-3000", label: "Acima de R$3.000" },
+];
+
+const BILL_RANGE_ESTIMATE: Record<BillRange, number> = {
+  "100-299": 200,
+  "300-499": 400,
+  "500-799": 650,
+  "800-1499": 1150,
+  "1500-3000": 2250,
+  "acima-3000": 3500,
 };
 
 const Formulario = () => {
   const [searchParams] = useSearchParams();
   const pitchParam = searchParams.get("pitch");
   const pitch: Pitch = pitchParam === "financiamento" ? "financiamento" : "roi";
-  const copy = useMemo(() => PITCH_COPY[pitch], [pitch]);
 
   const { trackFormSubmission, trackButtonClick } = useGTM();
   usePageTracking();
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<{
+    name: string;
+    phone: string;
+    city: string;
+    propertyType: PropertyType | "";
+    priorKnowledge: PriorKnowledge | "";
+    billRange: BillRange | "";
+  }>({
     name: "",
     phone: "",
     city: "",
-    billValue: "",
+    propertyType: "",
+    priorKnowledge: "",
+    billRange: "",
   });
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -43,17 +77,34 @@ const Formulario = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const isValid =
+    formData.name &&
+    formData.phone &&
+    formData.city &&
+    formData.propertyType &&
+    formData.priorKnowledge &&
+    formData.billRange;
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!isValid) return;
     setIsLoading(true);
     setError("");
     setIsSuccess(false);
+
+    const estimate = formData.billRange
+      ? BILL_RANGE_ESTIMATE[formData.billRange]
+      : 0;
 
     try {
       const response = await fetch("/api/send-email", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...formData, pitch }),
+        body: JSON.stringify({
+          ...formData,
+          billValue: `R$ ${estimate.toLocaleString("pt-BR")} (faixa: ${formData.billRange})`,
+          pitch,
+        }),
       });
 
       const contentType = response.headers.get("content-type");
@@ -67,17 +118,27 @@ const Formulario = () => {
         );
       }
 
-      if (!response.ok) throw new Error(data.error || `Erro: ${response.status}`);
-      if (!data.success) throw new Error(data.error || "Erro ao enviar formulário");
+      if (!response.ok)
+        throw new Error(data.error || `Erro: ${response.status}`);
+      if (!data.success)
+        throw new Error(data.error || "Erro ao enviar formulário");
 
       trackFormSubmission({
         ...formData,
+        billValue: `${estimate}`,
         form_name: `formulario_${pitch}`,
         pitch,
       });
       trackButtonClick(`formulario_submit_${pitch}`, "formulario_page");
       setIsSuccess(true);
-      setFormData({ name: "", phone: "", city: "", billValue: "" });
+      setFormData({
+        name: "",
+        phone: "",
+        city: "",
+        propertyType: "",
+        priorKnowledge: "",
+        billRange: "",
+      });
     } catch (err) {
       setError(
         err instanceof Error
@@ -92,7 +153,10 @@ const Formulario = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-radial-dark via-[#1a0f2a] to-[#2a1f3a] py-12 px-4 relative">
       <Helmet>
-        <title>{copy.h1} - Radial Energia</title>
+        <title>
+          Simule quanto você pode economizar na sua conta de luz - Radial
+          Energia
+        </title>
         <meta name="robots" content="noindex, nofollow" />
       </Helmet>
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -103,10 +167,11 @@ const Formulario = () => {
       <div className="container mx-auto max-w-3xl relative z-10">
         <div className="text-center mb-8 md:mb-12">
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
-            {copy.h1}
+            Simule quanto você pode economizar na sua conta de luz
           </h1>
           <p className="text-lg md:text-xl text-white/90 max-w-2xl mx-auto leading-relaxed">
-            {copy.sub}
+            Responda algumas perguntas rápidas e veja quanto você pode
+            economizar com energia solar
           </p>
         </div>
 
@@ -127,10 +192,11 @@ const Formulario = () => {
                 </svg>
               </div>
               <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">
-                Pronto! Sua solicitação foi enviada
+                Pronto! Sua simulação foi enviada
               </h2>
               <p className="text-white/80 mb-6">
-                Nossa equipe entrará em contato em breve via WhatsApp.
+                Agora vamos calcular sua economia e em breve entraremos em
+                contato com você
               </p>
               <Link
                 to="/"
@@ -184,7 +250,7 @@ const Formulario = () => {
                     onChange={handleChange}
                     disabled={isLoading}
                     className="w-full px-4 py-3 bg-white/20 border border-white/30 rounded-lg focus:ring-2 focus:ring-radial-orange focus:border-radial-orange outline-none transition-all text-white placeholder:text-white/60"
-                    placeholder="(21) 99999-9999"
+                    placeholder="(DDD) 9 9999-9999"
                   />
                 </div>
 
@@ -208,32 +274,105 @@ const Formulario = () => {
                   />
                 </div>
 
-                <div>
-                  <label
-                    htmlFor="billValue"
-                    className="block text-sm font-semibold text-white mb-2"
-                  >
-                    Valor da sua conta de luz mensal *
-                  </label>
-                  <input
-                    type="text"
-                    id="billValue"
-                    name="billValue"
-                    required
-                    value={formData.billValue}
-                    onChange={handleChange}
-                    disabled={isLoading}
-                    className="w-full px-4 py-3 bg-white/20 border border-white/30 rounded-lg focus:ring-2 focus:ring-radial-orange focus:border-radial-orange outline-none transition-all text-white placeholder:text-white/60"
-                    placeholder="Ex: R$ 500,00"
-                  />
-                </div>
+                <fieldset>
+                  <legend className="block text-sm font-semibold text-white mb-3">
+                    Para onde é o projeto? *
+                  </legend>
+                  <div className="grid grid-cols-3 gap-2 md:gap-3">
+                    {PROPERTY_OPTIONS.map((opt) => {
+                      const active = formData.propertyType === opt.value;
+                      return (
+                        <button
+                          type="button"
+                          key={opt.value}
+                          onClick={() =>
+                            setFormData((p) => ({
+                              ...p,
+                              propertyType: opt.value,
+                            }))
+                          }
+                          disabled={isLoading}
+                          className={`px-3 py-3 rounded-lg border text-sm md:text-base font-semibold transition-all ${
+                            active
+                              ? "bg-radial-orange border-radial-orange text-white shadow-lg shadow-radial-orange/30"
+                              : "bg-white/20 border-white/30 text-white/90 hover:bg-white/30"
+                          }`}
+                        >
+                          {opt.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </fieldset>
+
+                <fieldset>
+                  <legend className="block text-sm font-semibold text-white mb-3">
+                    Você já conhece energia solar? *
+                  </legend>
+                  <div className="grid grid-cols-2 gap-3">
+                    {KNOWLEDGE_OPTIONS.map((opt) => {
+                      const active = formData.priorKnowledge === opt.value;
+                      return (
+                        <button
+                          type="button"
+                          key={opt.value}
+                          onClick={() =>
+                            setFormData((p) => ({
+                              ...p,
+                              priorKnowledge: opt.value,
+                            }))
+                          }
+                          disabled={isLoading}
+                          className={`px-4 py-3 rounded-lg border text-sm md:text-base font-semibold transition-all ${
+                            active
+                              ? "bg-radial-orange border-radial-orange text-white shadow-lg shadow-radial-orange/30"
+                              : "bg-white/20 border-white/30 text-white/90 hover:bg-white/30"
+                          }`}
+                        >
+                          {opt.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </fieldset>
+
+                <fieldset>
+                  <legend className="block text-sm font-semibold text-white mb-3">
+                    Quanto você paga na conta de luz por mês? *
+                  </legend>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 md:gap-3">
+                    {BILL_RANGES.map((opt) => {
+                      const active = formData.billRange === opt.value;
+                      return (
+                        <button
+                          type="button"
+                          key={opt.value}
+                          onClick={() =>
+                            setFormData((p) => ({
+                              ...p,
+                              billRange: opt.value,
+                            }))
+                          }
+                          disabled={isLoading}
+                          className={`px-4 py-3 rounded-lg border text-sm md:text-base font-semibold transition-all ${
+                            active
+                              ? "bg-radial-orange border-radial-orange text-white shadow-lg shadow-radial-orange/30"
+                              : "bg-white/20 border-white/30 text-white/90 hover:bg-white/30"
+                          }`}
+                        >
+                          {opt.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </fieldset>
 
                 <button
                   type="submit"
-                  disabled={isLoading}
+                  disabled={isLoading || !isValid}
                   className="w-full bg-radial-orange hover:bg-orange-600 text-white font-bold py-4 px-6 rounded-lg text-lg md:text-xl transform hover:scale-105 transition-all duration-300 shadow-2xl shadow-radial-orange/50 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                 >
-                  {isLoading ? "Enviando..." : copy.cta}
+                  {isLoading ? "Enviando..." : "Simular minha economia"}
                 </button>
 
                 <p className="text-xs text-white/60 text-center">

@@ -3,6 +3,7 @@ import Diferenciais from "@/components/Diferenciais";
 import Footer from "@/components/Footer";
 import Hero from "@/components/hero";
 import HowItWorks from "@/components/HowItWorks";
+import Investimento from "@/components/Investimento";
 import Resultados from "@/components/Resultados";
 import { CONTACT_WHATSAPP } from "@/constants/urls";
 import { useGTM } from "@/hooks/useGTM";
@@ -29,6 +30,7 @@ const HomePage = () => {
       </Helmet>
       <main className="flex-grow">
         <Hero />
+        <Investimento />
         <Resultados />
         <HowItWorks />
         <Diferenciais />

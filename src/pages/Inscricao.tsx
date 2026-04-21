@@ -34,16 +34,16 @@ const Inscricao = () => {
       <div className="container mx-auto max-w-4xl relative z-10">
         <div className="text-center">
           <h1 className="text-white text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-extrabold mb-6 leading-tight">
-            Último Passo para o Estudo de Viabilidade Gratuito
+            Último passo para simular sua economia
           </h1>
           <p className="text-white/90 text-lg md:text-xl lg:text-2xl mb-12 max-w-2xl mx-auto">
-            Antes de preencher seus dados, nos ajude a direcionar a proposta
-            ideal para sua casa.
+            Antes de continuar, nos diga qual é o seu objetivo com a energia
+            solar
           </p>
 
           <div className="mb-12">
             <h2 className="text-white text-2xl md:text-3xl font-bold mb-8">
-              Qual a sua prioridade neste investimento?
+              O que você busca com energia solar?
             </h2>
           </div>
 
@@ -57,11 +57,7 @@ const Inscricao = () => {
                   <TrendingUp className="w-8 h-8 md:w-10 md:h-10" />
                 </div>
                 <span className="text-center leading-tight">
-                  Ter o Dinheiro de Volta Rápido
-                  <br />
-                  <span className="text-sm md:text-base opacity-90">
-                    (Alto Retorno)
-                  </span>
+                  Quero economizar o máximo na conta de luz
                 </span>
               </div>
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
@@ -76,7 +72,7 @@ const Inscricao = () => {
                   <Coins className="w-8 h-8 md:w-10 md:h-10" />
                 </div>
                 <span className="text-center leading-tight">
-                  Usar Financiamento para Pagar com a Economia
+                  Quero financiar e pagar com a economia
                 </span>
               </div>
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
@@ -84,8 +80,7 @@ const Inscricao = () => {
           </div>
 
           <p className="text-white/70 text-sm md:text-base">
-            Ao clicar em uma das opções, você será direcionado ao formulário
-            seguro.
+            Escolha uma opção para continuar e ver sua simulação
           </p>
         </div>
       </div>

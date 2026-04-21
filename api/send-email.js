@@ -41,7 +41,16 @@ export default async function handler(req, res) {
       });
     }
 
-    const { name, phone, city, billValue, propertyType, pitch } = req.body;
+    const {
+      name,
+      phone,
+      city,
+      billValue,
+      billRange,
+      propertyType,
+      priorKnowledge,
+      pitch,
+    } = req.body;
 
     // Validação básica
     if (!name || !phone || !city) {
@@ -57,6 +66,31 @@ export default async function handler(req, res) {
         : pitch === "financiamento"
         ? "Financiamento com economia"
         : null;
+
+    const propertyLabel =
+      propertyType === "casa"
+        ? "Casa"
+        : propertyType === "apartamento"
+        ? "Apartamento"
+        : propertyType === "empresa"
+        ? "Empresa"
+        : null;
+
+    const knowledgeLabel =
+      priorKnowledge === "sim"
+        ? "Já conhece energia solar"
+        : priorKnowledge === "nao"
+        ? "Ainda não conhece energia solar"
+        : null;
+
+    const billRangeLabel = {
+      "100-299": "R$100 – R$299",
+      "300-499": "R$300 – R$499",
+      "500-799": "R$500 – R$799",
+      "800-1499": "R$800 – R$1.499",
+      "1500-3000": "R$1.500 – R$3.000",
+      "acima-3000": "Acima de R$3.000",
+    }[billRange] || null;
 
     // Enviar email usando Resend
     const { data, error } = await resend.emails.send({
@@ -78,8 +112,15 @@ export default async function handler(req, res) {
               <p style="margin: 8px 0; font-size: 16px;"><strong>📱 WhatsApp:</strong> ${phone}</p>
               <p style="margin: 8px 0; font-size: 16px;"><strong>📍 Cidade:</strong> ${city}</p>
               ${
-                propertyType
+                propertyLabel
+                  ? `<p style="margin: 8px 0; font-size: 16px;"><strong>🏠 Tipo de imóvel:</strong> ${propertyLabel}</p>`
+                  : propertyType
                   ? `<p style="margin: 8px 0; font-size: 16px;"><strong>🏠 Tipo de imóvel:</strong> ${propertyType}</p>`
+                  : ''
+              }
+              ${
+                knowledgeLabel
+                  ? `<p style="margin: 8px 0; font-size: 16px;"><strong>🧠 Conhecimento prévio:</strong> ${knowledgeLabel}</p>`
                   : ''
               }
               ${
@@ -88,7 +129,9 @@ export default async function handler(req, res) {
                   : ''
               }
               ${
-                billValue
+                billRangeLabel
+                  ? `<p style="margin: 8px 0; font-size: 16px;"><strong>💡 Faixa da conta:</strong> ${billRangeLabel}</p>`
+                  : billValue
                   ? `<p style="margin: 8px 0; font-size: 16px;"><strong>💡 Valor da conta:</strong> ${billValue}</p>`
                   : '<p style="margin: 8px 0; font-size: 14px; opacity: 0.9;"><em>Valor da conta não informado</em></p>'
               }
@@ -159,6 +202,8 @@ export default async function handler(req, res) {
         city,
         propertyType,
         billValue,
+        billRange: billRange || null,
+        priorKnowledge: priorKnowledge || null,
         pitch: pitch || null,
         timestamp: new Date().toISOString(),
         recipients: ["contato@sejaradial.com.br"],
