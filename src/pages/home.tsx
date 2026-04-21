@@ -4,7 +4,6 @@ import Footer from "@/components/Footer";
 import Hero from "@/components/hero";
 import HowItWorks from "@/components/HowItWorks";
 import Resultados from "@/components/Resultados";
-import StickyBanner from "@/components/StickyBanner";
 import { CONTACT_WHATSAPP } from "@/constants/urls";
 import { useGTM } from "@/hooks/useGTM";
 import { usePageTracking } from "@/hooks/usePageTracking";
@@ -28,7 +27,6 @@ const HomePage = () => {
         <link rel="canonical" href="https://sejaradial.com.br/" />
         <meta name="robots" content="index, follow" />
       </Helmet>
-      <StickyBanner />
       <main className="flex-grow">
         <Hero />
         <Resultados />
