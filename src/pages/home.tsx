@@ -25,7 +25,7 @@ const HomePage = () => {
           name="description"
           content="Energia solar residencial no Rio de Janeiro. Reduza sua conta de luz em até 95% com projeto personalizado, instalação profissional e garantia estendida. Solicite estudo gratuito."
         />
-        <link rel="canonical" href="https://sejaradial.com.br/" />
+        <link rel="canonical" href="https://lp2.sejaradial.com.br/" />
         <meta name="robots" content="index, follow" />
       </Helmet>
       <main className="flex-grow">
