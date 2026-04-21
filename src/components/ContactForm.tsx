@@ -133,7 +133,7 @@ const ContactForm = () => {
                 </button>
 
                 <a
-                  href="https://wa.me/5521983617914?text=Olá!%20Acabei%20de%20enviar%20uma%20solicitação%20pelo%20site"
+                  href="https://wa.me/5521968940005?text=Olá!%20Acabei%20de%20enviar%20uma%20solicitação%20pelo%20site"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="bg-green-600 text-white px-6 py-2 rounded-md hover:bg-green-700 transition-all text-center"
