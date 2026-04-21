@@ -45,3 +45,14 @@ dist-ssr
 # Misc
 .DS_Store
 Thumbs.db
+
+# Playwright MCP artifacts
+.playwright-mcp/
+
+# Screenshots/prints de validação na raiz
+/*.png
+/*.jpg
+/*.jpeg
+
+# Documentos de referência locais
+ALTERACOES-SITE.md
