@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /inscricao
+Disallow: /formulario
+
+Sitemap: https://sejaradial.com.br/sitemap.xml

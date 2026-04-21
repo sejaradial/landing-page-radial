@@ -15,8 +15,12 @@ const Footer = () => {
           <div className="space-y-4 text-center lg:text-left">
             <img
               src="/logo-fundo-escuro.png"
-              alt="Logo Radial"
+              alt="Radial Energia Solar - Logo"
               className="w-24 h-auto mx-auto lg:mx-0 mb-4"
+              loading="lazy"
+              decoding="async"
+              width={200}
+              height={60}
             />
 
             <p className="text-gray-300 text-sm leading-relaxed max-w-xs mx-auto lg:mx-0 text-center lg:text-left">

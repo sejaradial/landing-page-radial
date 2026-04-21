@@ -1,7 +1,7 @@
-import { CONTACT_WHATSAPP } from "@/constants/urls";
 import { useGTM } from "@/hooks/useGTM";
 import { Award, CheckCircle, Home, PiggyBank, Shield, Sun } from "lucide-react";
 import { useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 
 const Diferenciais = () => {
   const { trackSectionView, trackButtonClick } = useGTM();
@@ -157,7 +157,7 @@ const Diferenciais = () => {
         <div className="text-center max-w-4xl mx-auto mb-12">
           <div className="bg-white/10 backdrop-blur-sm rounded-3xl p-8 border border-white/20">
             <p className="text-white text-xl md:text-2xl font-bold mb-4 leading-relaxed">
-              "A economia na sua conta de luz pode virar a viagem dos seus sonhos, o estudo dos seus filhos ou o investimento que faltava para o seu futuro."
+              "Todo mês a conta de luz sobe e pesa no bolso. Com energia solar, você reduz esse custo e passa a economizar de verdade, com mais tranquilidade para sua casa."
             </p>
             <p className="text-gray-300 text-lg">
               Pedro Nascimento e Remisson Ventura, diretores da Radial.
@@ -167,14 +167,14 @@ const Diferenciais = () => {
 
         {/* CTA final */}
         <div className="text-center">
-          <a
-            href={CONTACT_WHATSAPP}
+          <Link
+            to="/inscricao"
             className="inline-block bg-radial-orange text-white py-4 px-8 rounded-full text-lg font-bold hover:bg-orange-600 transition-all shadow-lg hover:shadow-xl transform hover:scale-105 relative overflow-hidden"
             onClick={() =>
               trackButtonClick("diferenciais_cta", "diferenciais_section")
             }
           >
-            <span className="relative z-10">Começar meu projeto solar</span>
+            <span className="relative z-10">Simular minha economia agora</span>
             <div
               className="absolute inset-0 opacity-25 animate-shimmer"
               style={{
@@ -182,7 +182,7 @@ const Diferenciais = () => {
                 transform: "translateX(-100%)"
               }}
             ></div>
-          </a>
+          </Link>
           <p className="text-white mt-4 text-lg">
             ⚡ Empresa certificada • Equipe especializada • Resultados comprovados
           </p>

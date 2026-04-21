@@ -1,6 +1,7 @@
 import { useGTM } from "@/hooks/useGTM";
 import { ChevronLeft, ChevronRight, Lightbulb, MapPin } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import { VideoTestimonial, VideoTestimonialCard } from "./VideoTestimonialCard";
 
 // Dados dos depoimentos em vídeo
@@ -35,7 +36,7 @@ const videoTestimonialsData: VideoTestimonial[] = [
 const successCasesData = [
   {
     id: 1,
-    imageUrl: "/galpao-prime-alimentos.png",
+    imageUrl: "/galpao-prime-alimentos.webp",
     savings: "R$ 160.000,00",
     name: "Prime Alimentos",
     location: "Jardim América",
@@ -43,7 +44,7 @@ const successCasesData = [
   },
   {
     id: 2,
-    imageUrl: "/pizzaria-exagerados.png",
+    imageUrl: "/pizzaria-exagerados.webp",
     savings: "R$ 130.000,00",
     name: "Pizzaria Exagerados",
     location: "Bangu",
@@ -51,7 +52,7 @@ const successCasesData = [
   },
   {
     id: 3,
-    imageUrl: "/padaria-nossa-senhora.png",
+    imageUrl: "/padaria-nossa-senhora.webp",
     savings: "R$ 70.000,00",
     name: "Padaria N. Senhora",
     location: "Bangu",
@@ -59,7 +60,7 @@ const successCasesData = [
   },
   {
     id: 4,
-    imageUrl: "/galpao-aguas-boas.png",
+    imageUrl: "/galpao-aguas-boas.webp",
     savings: "R$ 70.000,00",
     name: "Galpão Águas Boas",
     location: "Pechincha",
@@ -67,7 +68,7 @@ const successCasesData = [
   },
   {
     id: 5,
-    imageUrl: "/condominio-riviera.png",
+    imageUrl: "/condominio-riviera.webp",
     savings: "R$ 40.000,00",
     name: "Condomínio Riviera",
     location: "Santa Cruz",
@@ -75,7 +76,7 @@ const successCasesData = [
   },
   {
     id: 6,
-    imageUrl: "/condominio-four-seasons.png",
+    imageUrl: "/condominio-four-seasons.webp",
     savings: "R$ 40.000,00",
     name: "Cond. Four Seasons",
     location: "Freguesia",
@@ -84,7 +85,7 @@ const successCasesData = [
 ];
 
 const Resultados = () => {
-  const { trackSectionView, trackTestimonialView, trackButtonClick, trackWhatsAppClick } = useGTM();
+  const { trackSectionView, trackTestimonialView, trackButtonClick } = useGTM();
   const sectionRef = useRef<HTMLElement>(null);
   
   // Estados para tabs
@@ -217,7 +218,7 @@ const Resultados = () => {
                   : 'text-gray-600 hover:text-gray-800'
               }`}
             >
-              📹 Depoimentos
+              Depoimentos
             </button>
             <button
               onClick={() => handleTabChange('cases')}
@@ -227,7 +228,7 @@ const Resultados = () => {
                   : 'text-gray-600 hover:text-gray-800'
               }`}
             >
-              🏢 Cases de Sucesso
+              Cases de Sucesso
             </button>
           </div>
         </div>
@@ -356,8 +357,12 @@ const Resultados = () => {
                     <div className="w-full h-full bg-gray-200 overflow-hidden">
                       <img
                         src={caseItem.imageUrl}
-                        alt={`Case de sucesso ${caseItem.id}`}
+                        alt={`${caseItem.name} - ${caseItem.location}: economia anual estimada de ${caseItem.savings}`}
                         className="w-full h-full object-cover"
+                        loading="lazy"
+                        decoding="async"
+                        width={1200}
+                        height={900}
                       />
                     </div>
                   </div>
@@ -462,8 +467,12 @@ const Resultados = () => {
                           <div className="w-full h-full bg-gray-200 overflow-hidden">
                             <img
                               src={caseItem.imageUrl}
-                              alt={`Case de sucesso ${caseItem.id}`}
+                              alt={`${caseItem.name} - ${caseItem.location}: economia anual estimada de ${caseItem.savings}`}
                               className="w-full h-full object-cover"
+                              loading="lazy"
+                              decoding="async"
+                              width={1200}
+                              height={900}
                             />
                           </div>
                         </div>
@@ -521,14 +530,12 @@ const Resultados = () => {
       
       {/* CTA Button - Positioned absolutely in orange area */}
       <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
-        <button
+        <Link
+          to="/inscricao"
           onClick={() => {
-            // Track both button click and WhatsApp interaction
             trackButtonClick("quero_economizar_tambem", "resultados_section");
-            trackWhatsAppClick("cta_resultados_section", "economia_interesse");
-            window.open('https://wa.me/5521983617914', '_blank');
           }}
-          className="bg-white text-gray-800 font-semibold px-8 py-3 rounded-full transition-colors shadow-lg hover:shadow-xl hover:scale-105 transform whitespace-nowrap hover:bg-gray-50 relative overflow-hidden"
+          className="inline-block bg-white text-gray-800 font-semibold px-8 py-3 rounded-full transition-colors shadow-lg hover:shadow-xl hover:scale-105 transform whitespace-nowrap hover:bg-gray-50 relative overflow-hidden"
         >
           <span className="relative z-10">Quero economizar também!</span>
           <div
@@ -538,7 +545,7 @@ const Resultados = () => {
               transform: "translateX(-100%)"
             }}
           ></div>
-        </button>
+        </Link>
       </div>
     </section>
   );

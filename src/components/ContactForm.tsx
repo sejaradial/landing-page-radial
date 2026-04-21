@@ -7,6 +7,7 @@ const ContactForm = () => {
     phone: "",
     city: "",
     billValue: "",
+    propertyType: "",
   });
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -66,6 +67,7 @@ const ContactForm = () => {
         phone: "",
         city: "",
         billValue: "",
+        propertyType: "",
       });
 
       // Trackear envio do formulário no GTM
@@ -106,30 +108,30 @@ const ContactForm = () => {
               </div>
               
               <h2 className="text-2xl font-bold text-gray-800 mb-4">
-                🎉 Obrigado pelo seu interesse!
+                Pronto! Sua simulação foi enviada
               </h2>
-              
+
               <p className="text-gray-600 mb-6 text-lg">
-                Recebemos sua solicitação de análise gratuita e entraremos em contato em breve pelo WhatsApp.
+                Agora vamos calcular sua economia e em breve entraremos em contato com você
               </p>
-              
+
               <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
                 <p className="text-green-700 text-sm">
                   <strong>Próximos passos:</strong><br/>
                   • Nossa equipe analisará suas informações<br/>
-                  • Você receberá um contato via WhatsApp em até 2 horas<br/>
-                  • Faremos uma proposta personalizada gratuita
+                  • Você receberá um contato via WhatsApp em breve<br/>
+                  • Faremos uma simulação personalizada gratuita
                 </p>
               </div>
-              
+
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <button
                   onClick={() => setIsSuccess(false)}
                   className="bg-radial-orange text-white px-6 py-2 rounded-md hover:brightness-110 transition-all"
                 >
-                  Enviar nova solicitação
+                  Refazer simulação
                 </button>
-                
+
                 <a
                   href="https://wa.me/5521983617914?text=Olá!%20Acabei%20de%20enviar%20uma%20solicitação%20pelo%20site"
                   target="_blank"
@@ -137,7 +139,7 @@ const ContactForm = () => {
                   className="bg-green-600 text-white px-6 py-2 rounded-md hover:bg-green-700 transition-all text-center"
                   onClick={() => trackButtonClick('whatsapp_direct', 'success_page')}
                 >
-                  Falar no WhatsApp agora
+                  Falar com especialista agora
                 </a>
               </div>
             </div>
@@ -157,12 +159,12 @@ const ContactForm = () => {
           <div className="relative bg-white rounded-2xl border-t-4 border-radial-orange px-5 py-8 md:px-7 md:py-10 z-10">
             <div className="text-center mb-8">
               <h2 className="text-2xl font-bold text-radial-dark">
-                <span className="text-radial-orange">Solicite</span> sua análise
-                gratuita
+                <span className="text-radial-orange">Solicite</span> sua simulação
+                gratuita e veja quanto pode economizar
               </h2>
               <p className="text-gray-700 mt-2">
-                Preencha o formulário abaixo e descubra quanto você pode
-                economizar
+                Preencha os dados abaixo e descubra quanto você pode
+                economizar na sua conta de luz
               </p>
             </div>
 
@@ -192,7 +194,7 @@ const ContactForm = () => {
                   value={formData.name}
                   onChange={handleChange}
                   className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-radial-orange focus:border-transparent transition-colors"
-                  placeholder="Digite seu nome"
+                  placeholder="Digite seu nome completo"
                   required
                   disabled={isLoading}
                 />
@@ -212,7 +214,7 @@ const ContactForm = () => {
                   value={formData.phone}
                   onChange={handleChange}
                   className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-radial-orange focus:border-transparent transition-colors"
-                  placeholder="(21) 99999-9999"
+                  placeholder="(DDD) 9 9999-9999"
                   required
                   disabled={isLoading}
                 />
@@ -240,10 +242,33 @@ const ContactForm = () => {
 
               <div>
                 <label
+                  htmlFor="propertyType"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                >
+                  Tipo de imóvel*
+                </label>
+                <select
+                  id="propertyType"
+                  name="propertyType"
+                  value={formData.propertyType}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-radial-orange focus:border-transparent transition-colors"
+                  required
+                  disabled={isLoading}
+                >
+                  <option value="">Selecione o tipo de imóvel</option>
+                  <option value="casa">Casa</option>
+                  <option value="apartamento">Apartamento</option>
+                  <option value="empresa">Empresa</option>
+                </select>
+              </div>
+
+              <div>
+                <label
                   htmlFor="billValue"
                   className="block text-sm font-medium text-gray-700 mb-1"
                 >
-                  Valor da sua conta de luz mensal (opcional)
+                  Quanto você paga na conta de luz por mês? (opcional)
                 </label>
                 <input
                   type="text"
@@ -252,7 +277,7 @@ const ContactForm = () => {
                   value={formData.billValue}
                   onChange={handleChange}
                   className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-radial-orange focus:border-transparent transition-colors"
-                  placeholder="R$ 000,00"
+                  placeholder="Ex: R$ 300,00"
                   disabled={isLoading}
                 />
               </div>
@@ -271,7 +296,7 @@ const ContactForm = () => {
                     Enviando...
                   </>
                 ) : (
-                  "Quero minha análise gratuita"
+                  "Quero simular minha economia"
                 )}
               </button>
 

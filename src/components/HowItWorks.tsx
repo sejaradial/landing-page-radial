@@ -1,7 +1,7 @@
-import { CONTACT_WHATSAPP } from "@/constants/urls";
 import { useGTM } from "@/hooks/useGTM";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 
 const HowItWorks = () => {
   const { trackSectionView, trackButtonClick } = useGTM();
@@ -32,46 +32,46 @@ const HowItWorks = () => {
   const steps = [
     {
       number: 1,
-      title: "ANÁLISE E PROPOSTA",
-      description: "Análise gratuita de viabilidade e proposta personalizada para sua propriedade",
+      title: "ANÁLISE E SIMULAÇÃO",
+      description: "Analisamos sua conta de luz e mostramos quanto você pode economizar na sua casa",
       details: [
-        "Avaliação técnica e financeira completa",
-        "Proposta 100% personalizada",
-        "Simulação de economia detalhada",
-        "Análise do consumo energético atual"
+        "Análise do seu consumo atual de energia",
+        "Simulação personalizada para sua residência",
+        "Previsão de quanto você pode economizar por mês",
+        "Orientação inicial sobre o melhor sistema para sua casa"
       ]
     },
     {
       number: 2,
       title: "PROJETO E APROVAÇÃO",
-      description: "Desenvolvimento do projeto técnico e homologação junto à concessionária",
+      description: "Cuidamos de toda a parte técnica e da aprovação do sistema para você",
       details: [
-        "Projeto técnico completo conforme normas",
-        "Documentação técnica detalhada",
-        "Aprovação junto à concessionária",
-        "Todas as licenças necessárias"
+        "Projeto do sistema feito de acordo com a sua necessidade",
+        "Organização de toda a documentação necessária",
+        "Aprovação do sistema junto à concessionária de energia",
+        "Cuidamos de toda a parte burocrática para você"
       ]
     },
     {
       number: 3,
       title: "INSTALAÇÃO PROFISSIONAL",
-      description: "Instalação completa com nossa equipe especializada e equipamentos de qualidade",
+      description: "Instalamos todo o sistema com segurança, agilidade e equipamentos de qualidade",
       details: [
-        "Entrega dos equipamentos em até 20 dias",
-        "Instalação com equipe própria certificada",
-        "Equipamentos de alta qualidade",
-        "Testes completos do sistema"
+        "Entrega e preparação dos equipamentos para instalação",
+        "Instalação feita por equipe especializada",
+        "Uso de equipamentos seguros e de alta qualidade",
+        "Testes para garantir que tudo esteja funcionando corretamente"
       ]
     },
     {
       number: 4,
-      title: "MONITORAMENTO E SUPORTE",
-      description: "Acompanhamento contínuo do desempenho e suporte técnico completo",
+      title: "ECONOMIA E ACOMPANHAMENTO",
+      description: "Após a instalação, você acompanha sua geração de energia e começa a economizar",
       details: [
-        "Monitoramento em tempo real",
-        "Suporte técnico contínuo",
-        "Manutenção quando necessária",
-        "Garantia de 30 anos"
+        "Acompanhamento da geração de energia do sistema",
+        "Suporte para dúvidas e acompanhamento quando necessário",
+        "Orientação e suporte em caso de necessidade de manutenção",
+        "Garantia dos equipamentos e mais segurança para sua família"
       ]
     },
   ];
@@ -92,17 +92,22 @@ const HowItWorks = () => {
         <div className="text-center mb-12">
           <div className="flex justify-center mb-6">
             <img
-              src="/mulher-como-funciona.png"
-              alt="Mulher pensando"
+              src="/mulher-como-funciona.webp"
+              alt="Ilustração: mulher pensando sobre como funciona a energia solar"
               className="w-32 md:w-40"
+              loading="lazy"
+              decoding="async"
+              width={160}
+              height={160}
             />
           </div>
           <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-800">
-            Como <span className="text-radial-orange">funciona</span>?
+            Como funciona a energia solar na sua{" "}
+            <span className="text-radial-orange">casa</span> em 4 passos
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            <span className="md:hidden">Um processo simples e transparente do primeiro contato até você estar economizando</span>
-            <span className="hidden md:inline">Um processo simples e transparente do primeiro contato<br />até você estar economizando</span>
+            <span className="md:hidden">Um processo simples do primeiro contato até você começar a economizar na conta de luz</span>
+            <span className="hidden md:inline">Um processo simples do primeiro contato<br />até você começar a economizar na conta de luz</span>
           </p>
         </div>
 
@@ -162,14 +167,14 @@ const HowItWorks = () => {
 
         {/* CTA final */}
         <div className="text-center">
-          <a
-            href={CONTACT_WHATSAPP}
+          <Link
+            to="/inscricao"
             className="inline-block bg-radial-orange text-white py-4 px-8 rounded-full text-lg font-bold hover:bg-orange-600 transition-all shadow-lg hover:shadow-xl transform hover:scale-105 relative overflow-hidden"
             onClick={() =>
               trackButtonClick("how_it_works_cta", "how_it_works_section")
             }
           >
-            <span className="relative z-10">Quero economizar agora</span>
+            <span className="relative z-10">Quero reduzir minha conta de luz</span>
             <div
               className="absolute inset-0 opacity-25 animate-shimmer"
               style={{
@@ -177,7 +182,7 @@ const HowItWorks = () => {
                 transform: "translateX(-100%)"
               }}
             ></div>
-          </a>
+          </Link>
           <p className="text-gray-600 mt-4 text-lg">
             ⚡ Processo simples • Equipe especializada • Resultado garantido
           </p>

@@ -1,4 +1,6 @@
+import Formulario from "@/pages/Formulario";
 import HomePage from "@/pages/home";
+import Inscricao from "@/pages/Inscricao";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 
 const App = () => {
@@ -6,11 +8,8 @@ const App = () => {
     <Router>
       <Routes>
         <Route path="/" element={<HomePage />} />
-        {/* Adicione novas rotas aqui */}
-        {/* <Route path="/about" element={<AboutPage />} /> */}
-        {/* <Route path="/contact" element={<ContactPage />} /> */}
-        {/* <Route path="/sign-in" element={<SignInPage />} /> */}
-        {/* <Route path="/sign-up" element={<SignUpPage />} /> */}
+        <Route path="/inscricao" element={<Inscricao />} />
+        <Route path="/formulario" element={<Formulario />} />
       </Routes>
     </Router>
   );

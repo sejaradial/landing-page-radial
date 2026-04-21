@@ -100,12 +100,23 @@ const config = {
           "0%": { transform: "translateX(100%)" },
           "100%": { transform: "translateX(-100%)" },
         },
+        "subtle-glow": {
+          "0%, 100%": {
+            textShadow:
+              "rgba(255, 124, 64, 0.4) 0px 0px 8px, rgba(255, 255, 255, 0.5) 0px 0px 2px",
+          },
+          "50%": {
+            textShadow:
+              "rgba(255, 124, 64, 0.6) 0px 0px 12px, rgba(255, 124, 64, 0.3) 0px 0px 20px, rgba(255, 255, 255, 0.7) 0px 0px 2px",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "pulse-solar": "pulse-solar 3s cubic-bezier(0.4, 0, 0.6, 1) infinite",
         marquee: "marquee 20s linear infinite",
+        "video-cta": "subtle-glow 3s ease-in-out infinite",
       },
       backgroundImage: {
         "radial-gradient": "linear-gradient(to bottom, #ff7c40, #ff6028)",

@@ -1,6 +1,6 @@
-import { CONTACT_WHATSAPP } from "@/constants/urls";
 import { useGTM } from "@/hooks/useGTM";
 import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 
 const Hero = () => {
   const { trackButtonClick, trackVideoInteraction, trackSectionView } =
@@ -62,8 +62,8 @@ const Hero = () => {
               tranquilidade para sua casa.
             </p>
 
-            <a
-              href={CONTACT_WHATSAPP}
+            <Link
+              to="/inscricao"
               onClick={() => trackButtonClick("main_cta", "hero_section")}
               className="group inline-flex items-center justify-center gap-2 w-full md:w-auto bg-radial-orange hover:bg-orange-600 text-white font-bold py-4 px-8 lg:py-5 lg:px-12 rounded-full text-base md:text-lg lg:text-xl transform hover:scale-105 transition-all duration-300 shadow-2xl shadow-radial-orange/50 relative overflow-hidden self-center lg:self-start"
             >
@@ -84,7 +84,7 @@ const Hero = () => {
               <div
                 className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"
               ></div>
-            </a>
+            </Link>
 
             <div className="mt-6 lg:mt-8">
               <p className="text-white/80 text-sm md:text-base font-medium">
@@ -115,9 +115,13 @@ const Hero = () => {
                     onClick={handlePlayVideo}
                   >
                     <img
-                      src="/thumbnail-video-hero.png"
+                      src="/thumbnail-video-hero.webp"
                       alt="Como funciona energia solar?"
                       className="w-full h-full object-cover"
+                      width={1280}
+                      height={800}
+                      fetchPriority="high"
+                      decoding="async"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
                     <div className="absolute inset-0 flex items-center justify-center">
@@ -145,7 +149,7 @@ const Hero = () => {
               </div>
             </div>
 
-            <p className="text-white font-bold text-sm md:text-base mt-5">
+            <p className="text-white font-bold text-sm md:text-base mt-5 animate-video-cta">
               Assista o vídeo para entender melhor
             </p>
           </div>

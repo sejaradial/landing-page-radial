@@ -9,6 +9,7 @@ import { CONTACT_WHATSAPP } from "@/constants/urls";
 import { useGTM } from "@/hooks/useGTM";
 import { usePageTracking } from "@/hooks/usePageTracking";
 import { MessageCircle } from "lucide-react";
+import { Helmet } from "react-helmet-async";
 
 const HomePage = () => {
   const { trackWhatsAppClick } = useGTM();
@@ -18,6 +19,15 @@ const HomePage = () => {
 
   return (
     <div className="flex flex-col min-h-screen overflow-x-hidden">
+      <Helmet>
+        <title>Radial Energia Solar - Reduza sua conta de luz em até 95%</title>
+        <meta
+          name="description"
+          content="Energia solar residencial no Rio de Janeiro. Reduza sua conta de luz em até 95% com projeto personalizado, instalação profissional e garantia estendida. Solicite estudo gratuito."
+        />
+        <link rel="canonical" href="https://sejaradial.com.br/" />
+        <meta name="robots" content="index, follow" />
+      </Helmet>
       <StickyBanner />
       <main className="flex-grow">
         <Hero />

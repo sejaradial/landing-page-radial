@@ -41,7 +41,7 @@ export default async function handler(req, res) {
       });
     }
 
-    const { name, phone, city, billValue } = req.body;
+    const { name, phone, city, billValue, propertyType, pitch } = req.body;
 
     // Validação básica
     if (!name || !phone || !city) {
@@ -50,6 +50,13 @@ export default async function handler(req, res) {
         error: "Nome, telefone e cidade são obrigatórios",
       });
     }
+
+    const pitchLabel =
+      pitch === "roi"
+        ? "Retorno rápido / ROI"
+        : pitch === "financiamento"
+        ? "Financiamento com economia"
+        : null;
 
     // Enviar email usando Resend
     const { data, error } = await resend.emails.send({
@@ -70,6 +77,16 @@ export default async function handler(req, res) {
               <p style="margin: 8px 0; font-size: 16px;"><strong>👤 Nome:</strong> ${name}</p>
               <p style="margin: 8px 0; font-size: 16px;"><strong>📱 WhatsApp:</strong> ${phone}</p>
               <p style="margin: 8px 0; font-size: 16px;"><strong>📍 Cidade:</strong> ${city}</p>
+              ${
+                propertyType
+                  ? `<p style="margin: 8px 0; font-size: 16px;"><strong>🏠 Tipo de imóvel:</strong> ${propertyType}</p>`
+                  : ''
+              }
+              ${
+                pitchLabel
+                  ? `<p style="margin: 8px 0; font-size: 16px;"><strong>🎯 Interesse:</strong> ${pitchLabel}</p>`
+                  : ''
+              }
               ${
                 billValue
                   ? `<p style="margin: 8px 0; font-size: 16px;"><strong>💡 Valor da conta:</strong> ${billValue}</p>`
@@ -140,7 +157,9 @@ export default async function handler(req, res) {
         name,
         phone,
         city,
+        propertyType,
         billValue,
+        pitch: pitch || null,
         timestamp: new Date().toISOString(),
         recipients: ["contato@sejaradial.com.br"],
       },
