@@ -8,7 +8,6 @@ const Hero = () => {
   const heroRef = useRef<HTMLElement>(null);
   const [showVideo, setShowVideo] = useState(false);
 
-  // Track quando a seção hero fica visível
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -34,138 +33,121 @@ const Hero = () => {
   };
 
   return (
-    <section ref={heroRef} className="bg-radial-dark py-12 md:py-20">
-      <div className="container mx-auto px-4">
-        {/* Título principal centralizado */}
-        <div className="text-center mb-12">
-          <h1 className="text-white text-3xl md:text-5xl font-extrabold mb-6 leading-tight">
-            Pare de gastar com
-            <br />
-            <span className="text-radial-orange">contas de luz!</span>
-          </h1>
+    <section
+      ref={heroRef}
+      className="relative bg-gradient-to-br from-radial-dark via-[#1a0f2a] to-[#2a1f3a] py-12 md:py-16 lg:py-20 overflow-hidden flex items-center"
+    >
+      {/* Glows de fundo */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-radial-orange/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl"></div>
+      </div>
 
-          <h2 className="text-white text-2xl md:text-3xl font-bold mb-8">
-            Aprenda agora a como guardar esse dinheiro no seu bolso
-          </h2>
-        </div>
+      <div className="container mx-auto px-4 md:px-6 lg:px-8 xl:px-12 max-w-7xl relative z-10">
+        <div className="flex flex-col lg:grid lg:grid-cols-[1fr_1.15fr] gap-10 lg:gap-10 xl:gap-12 items-center">
+          {/* Coluna de texto */}
+          <div className="text-center lg:text-left w-full flex flex-col lg:pr-4 xl:pr-8">
+            <h1 className="text-white text-3xl md:text-4xl lg:text-4xl xl:text-5xl font-extrabold mb-4 lg:mb-6 leading-[1.15]">
+              Reduza sua conta de luz em até{" "}
+              <span className="text-radial-orange">90%</span> com energia solar
+            </h1>
 
-        {/* Vídeo GIGANTE como protagonista */}
-        <div className="flex justify-center mb-12">
-          <div className="relative max-w-5xl w-full">
-            {/* Monitor minimalista e elegante */}
-            <div className="relative bg-gradient-to-b from-slate-300 to-slate-400 rounded-3xl p-3 shadow-2xl">
-              {/* Moldura interna sutil */}
-              <div className="bg-gradient-to-b from-slate-100 to-slate-200 rounded-2xl p-2 shadow-inner">
-                {/* VÍDEO GIGANTE */}
-                <div className="bg-black rounded-xl overflow-hidden aspect-video shadow-lg relative">
-                  {!showVideo ? (
-                    // Capa customizada com frame do segundo 6
-                    <div 
-                      className="relative w-full h-full cursor-pointer group"
-                      onClick={handlePlayVideo}
-                    >
-                      {/* Thumbnail customizado do segundo 6 */}
-                      <img 
-                        src="/thumbnail-video-hero.png"
-                        alt="Como funciona energia solar?"
-                        className="w-full h-full object-cover"
-                      />
-                      
-                      {/* Overlay escuro sutil */}
-                      <div className="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-all duration-300"></div>
-                      
-                      {/* Botão de play discreto */}
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="bg-white/80 hover:bg-white/90 rounded-full p-4 group-hover:scale-105 transition-all duration-300 shadow-lg backdrop-blur-sm">
-                          <svg 
-                            className="w-8 h-8 text-gray-800 ml-0.5" 
-                            fill="currentColor" 
-                            viewBox="0 0 24 24"
-                          >
-                            <path d="M8 5v14l11-7z"/>
-                          </svg>
-                        </div>
-                      </div>
-                    </div>
-                  ) : (
-                    // Iframe do YouTube que aparece após o clique
-                    <iframe
-                      className="w-full h-full"
-                      src="https://www.youtube.com/embed/rg1ZPyEXSrY?autoplay=1&vq=hd720p&hd=1"
-                      title="Como funciona energia solar?"
-                      frameBorder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                    ></iframe>
-                  )}
-                </div>
-              </div>
+            <h2 className="text-white/90 text-lg md:text-xl lg:text-xl xl:text-2xl font-semibold mb-5 lg:mb-6 leading-snug">
+              Economize todos os meses e se proteja dos aumentos na conta de luz
+            </h2>
 
-              {/* Barra inferior minimalista */}
-              <div className="flex justify-center items-center mt-2">
-                <div className="flex items-center space-x-4">
-                  <div className="flex space-x-2">
-                    <div className="w-2 h-2 bg-slate-500 rounded-full"></div>
-                    <div className="w-2 h-2 bg-slate-500 rounded-full"></div>
-                  </div>
-                  <div className="text-sm text-slate-600 font-bold">RADIAL</div>
-                  <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                </div>
-              </div>
-            </div>
+            <p className="text-white/80 text-base md:text-lg mb-8 lg:mb-10 leading-relaxed max-w-xl lg:max-w-none mx-auto lg:mx-0">
+              Todo mês a conta de luz sobe e pesa no bolso. Com energia solar,
+              você reduz esse custo e passa a economizar de verdade, com mais
+              tranquilidade para sua casa.
+            </p>
 
-            {/* Base minimalista */}
-            <div className="flex justify-center mt-2">
-              <div className="w-24 h-4 bg-gradient-to-b from-slate-400 to-slate-500 rounded-b-xl"></div>
-            </div>
-
-            {/* Pedestal discreto */}
-            <div className="flex justify-center mt-1">
-              <div className="w-40 h-3 bg-gradient-to-b from-slate-500 to-slate-600 rounded-full shadow-lg"></div>
-            </div>
-          </div>
-        </div>
-
-        {/* Texto descritivo centralizado */}
-        <div className="text-center mb-12">
-          <p className="text-white text-lg md:text-xl font-medium max-w-4xl mx-auto leading-relaxed">
-            Moradores do RJ já estão economizando centenas por mês com a Radial
-            Energia Solar.
-          </p>
-        </div>
-
-        {/* CTA SECTION - Mais limpa e elegante */}
-        <div className="flex justify-center mb-8">
-          <div className="w-full max-w-xl">
-            {/* CTA Principal - Estilo anterior sem quebra de linha */}
             <a
               href={CONTACT_WHATSAPP}
-              className="block w-full bg-white text-radial-dark py-4 px-8 rounded-full text-center font-bold text-lg md:text-xl transform hover:scale-105 transition-all duration-300 relative mb-6 overflow-hidden"
-              style={{
-                boxShadow: "0 6px 0 #ff5d26, 0 8px 16px rgba(255, 93, 38, 0.3)",
-                position: "relative"
-              }}
               onClick={() => trackButtonClick("main_cta", "hero_section")}
+              className="group inline-flex items-center justify-center gap-2 w-full md:w-auto bg-radial-orange hover:bg-orange-600 text-white font-bold py-4 px-8 lg:py-5 lg:px-12 rounded-full text-base md:text-lg lg:text-xl transform hover:scale-105 transition-all duration-300 shadow-2xl shadow-radial-orange/50 relative overflow-hidden self-center lg:self-start"
             >
-              <span className="relative z-10">Quero minha análise gratuita</span>
+              <span className="relative z-10">Simular minha economia agora</span>
+              <svg
+                className="w-5 h-5 relative z-10 transition-transform group-hover:translate-x-1"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2.5}
+                  d="M17 8l4 4m0 0l-4 4m4-4H3"
+                />
+              </svg>
               <div
-                className="absolute inset-0 opacity-20 animate-shimmer"
-                style={{
-                  background: "linear-gradient(45deg, transparent 30%, rgba(255, 147, 38, 0.4) 50%, transparent 70%)",
-                  transform: "translateX(-100%)"
-                }}
+                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"
               ></div>
             </a>
 
-            {/* Benefícios mantidos - Design mais clean */}
-            <div className="text-center">
-              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4">
-                <p className="text-white text-sm md:text-base font-medium">
-                  <span className="md:hidden">✅ Estudo de viabilidade completo • ✅ Simulação de economia • ✅ Projeto personalizado</span>
-                  <span className="hidden md:inline">✅ Estudo de viabilidade completo • ✅ Simulação de economia<br />✅ Projeto personalizado</span>
-                </p>
+            <div className="mt-6 lg:mt-8">
+              <p className="text-white/80 text-sm md:text-base font-medium">
+                <span className="md:hidden">
+                  ✅ Estudo de viabilidade completo • ✅ Simulação de economia •
+                  ✅ Projeto personalizado
+                </span>
+                <span className="hidden md:inline">
+                  ✅ Estudo de viabilidade completo • ✅ Simulação de economia
+                  <br />
+                  ✅ Projeto personalizado
+                </span>
+              </p>
+            </div>
+          </div>
+
+          {/* Coluna do vídeo */}
+          <div className="w-full flex flex-col items-center">
+            <div className="relative w-full group">
+              {/* Glow laranja atrás do vídeo */}
+              <div className="absolute -inset-4 bg-radial-orange/20 rounded-3xl blur-2xl group-hover:bg-radial-orange/30 transition-all"></div>
+
+              {/* Player */}
+              <div className="relative bg-black rounded-2xl overflow-hidden aspect-[16/10] shadow-2xl border-4 border-white/10">
+                {!showVideo ? (
+                  <div
+                    className="relative w-full h-full cursor-pointer"
+                    onClick={handlePlayVideo}
+                  >
+                    <img
+                      src="/thumbnail-video-hero.png"
+                      alt="Como funciona energia solar?"
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="bg-white hover:bg-white/95 rounded-full p-5 md:p-6 group-hover:scale-110 transition-all duration-300 shadow-2xl">
+                        <svg
+                          className="w-8 h-8 md:w-10 md:h-10 text-radial-orange ml-1"
+                          fill="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path d="M8 5v14l11-7z" />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <iframe
+                    className="w-full h-full"
+                    src="https://www.youtube.com/embed/rg1ZPyEXSrY?autoplay=1&vq=hd720p&hd=1"
+                    title="Como funciona energia solar?"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  ></iframe>
+                )}
               </div>
             </div>
+
+            <p className="text-white font-bold text-sm md:text-base mt-5">
+              Assista o vídeo para entender melhor
+            </p>
           </div>
         </div>
       </div>
