@@ -106,6 +106,7 @@ const Resultados = () => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             trackSectionView("resultados");
+            observer.disconnect();
           }
         });
       },

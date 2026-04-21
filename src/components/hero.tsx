@@ -14,6 +14,7 @@ const Hero = () => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             trackSectionView("hero");
+            observer.disconnect();
           }
         });
       },

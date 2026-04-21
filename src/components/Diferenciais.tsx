@@ -14,6 +14,7 @@ const Diferenciais = () => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             trackSectionView("diferenciais");
+            observer.disconnect();
           }
         });
       },

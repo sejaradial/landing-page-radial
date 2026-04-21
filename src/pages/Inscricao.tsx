@@ -1,16 +1,22 @@
 import { useGTM } from "@/hooks/useGTM";
 import { usePageTracking } from "@/hooks/usePageTracking";
 import { Coins, TrendingUp } from "lucide-react";
+import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { useNavigate } from "react-router-dom";
 
 const Inscricao = () => {
   const navigate = useNavigate();
-  const { trackButtonClick } = useGTM();
+  const { trackButtonClick, trackFunnelStart, trackPitchSelected } = useGTM();
   usePageTracking();
+
+  useEffect(() => {
+    trackFunnelStart("inscricao");
+  }, [trackFunnelStart]);
 
   const handlePick = (pitch: "roi" | "financiamento") => {
     trackButtonClick(`inscricao_${pitch}`, "inscricao_page");
+    trackPitchSelected(pitch);
     navigate(`/formulario?pitch=${pitch}`);
   };
 

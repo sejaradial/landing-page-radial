@@ -15,6 +15,7 @@ const HowItWorks = () => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             trackSectionView("how_it_works");
+            observer.disconnect();
           }
         });
       },

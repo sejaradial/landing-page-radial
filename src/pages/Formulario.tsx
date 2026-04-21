@@ -70,7 +70,11 @@ const Formulario = () => {
       if (!response.ok) throw new Error(data.error || `Erro: ${response.status}`);
       if (!data.success) throw new Error(data.error || "Erro ao enviar formulário");
 
-      trackFormSubmission({ ...formData, pitch });
+      trackFormSubmission({
+        ...formData,
+        form_name: `formulario_${pitch}`,
+        pitch,
+      });
       trackButtonClick(`formulario_submit_${pitch}`, "formulario_page");
       setIsSuccess(true);
       setFormData({ name: "", phone: "", city: "", billValue: "" });
