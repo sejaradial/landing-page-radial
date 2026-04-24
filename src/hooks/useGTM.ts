@@ -1,10 +1,12 @@
 // src/hooks/useGTM.ts
+// Todos os eventos sobem para window.dataLayer e são roteados pelo GTM
+// (web + server-side via Stape) para Meta Pixel, GA4 e outras tags.
+// Não disparamos fbq/gtag diretamente para evitar duplicação.
 import { useCallback } from "react";
 
 declare global {
   interface Window {
     dataLayer: Record<string, unknown>[];
-    fbq?: (...args: unknown[]) => void;
   }
 }
 
@@ -19,24 +21,6 @@ export const useGTM = () => {
       window.dataLayer = window.dataLayer || [];
       window.dataLayer.push({ event, ...data });
       if (IS_DEV) console.log("[GTM]", event, data);
-    },
-    []
-  );
-
-  const fbqTrack = useCallback(
-    (event: string, params?: Record<string, unknown>) => {
-      if (typeof window === "undefined" || !window.fbq) return;
-      window.fbq("track", event, params);
-      if (IS_DEV) console.log("[FBQ]", event, params);
-    },
-    []
-  );
-
-  const fbqTrackCustom = useCallback(
-    (event: string, params?: Record<string, unknown>) => {
-      if (typeof window === "undefined" || !window.fbq) return;
-      window.fbq("trackCustom", event, params);
-      if (IS_DEV) console.log("[FBQ custom]", event, params);
     },
     []
   );
@@ -65,17 +49,12 @@ export const useGTM = () => {
         user_city: formData.city || null,
         bill_value: billNumeric || null,
         conversion_value: estimatedLeadValue,
+        currency: "BRL",
         has_name: Boolean(formData.name),
         has_phone: Boolean(formData.phone),
       });
-
-      fbqTrack("Lead", {
-        value: estimatedLeadValue,
-        currency: "BRL",
-        content_name: formData.pitch || formName,
-      });
     },
-    [pushEvent, fbqTrack]
+    [pushEvent]
   );
 
   const trackPageView = useCallback(
@@ -105,17 +84,15 @@ export const useGTM = () => {
   const trackFunnelStart = useCallback(
     (source: string) => {
       pushEvent("funnel_start", { source });
-      fbqTrack("InitiateCheckout", { content_name: source });
     },
-    [pushEvent, fbqTrack]
+    [pushEvent]
   );
 
   const trackPitchSelected = useCallback(
     (pitch: Pitch) => {
       pushEvent("pitch_selected", { pitch });
-      fbqTrack("SubmitApplication", { content_name: pitch });
     },
-    [pushEvent, fbqTrack]
+    [pushEvent]
   );
 
   const trackSectionView = useCallback(
@@ -124,11 +101,8 @@ export const useGTM = () => {
         section_name: sectionName,
         engagement_type: "scroll",
       });
-      if (sectionName === "hero") {
-        fbqTrack("ViewContent", { content_name: "hero" });
-      }
     },
-    [pushEvent, fbqTrack]
+    [pushEvent]
   );
 
   const trackVideoInteraction = useCallback(
@@ -171,9 +145,8 @@ export const useGTM = () => {
         message_type: message || "default",
         contact_method: "whatsapp",
       });
-      fbqTrack("Contact", { content_name: location });
     },
-    [pushEvent, fbqTrack]
+    [pushEvent]
   );
 
   const trackServiceInterest = useCallback(
@@ -214,8 +187,6 @@ export const useGTM = () => {
 
   return {
     pushEvent,
-    fbqTrack,
-    fbqTrackCustom,
     trackFormSubmission,
     trackPageView,
     trackButtonClick,

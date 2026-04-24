@@ -4,10 +4,9 @@ import { useGTM } from "./useGTM";
 
 export const useRouteChangeTracking = () => {
   const location = useLocation();
-  const { trackPageView, fbqTrack } = useGTM();
+  const { trackPageView } = useGTM();
 
   useEffect(() => {
     trackPageView();
-    fbqTrack("PageView");
-  }, [location.pathname, location.search, trackPageView, fbqTrack]);
+  }, [location.pathname, location.search, trackPageView]);
 };
